@@ -1,0 +1,36 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    activate server
+    server-->>browser: the JavaScript file
+    deactivate server
+
+    Note right of browser: The browser starts executing the JavaScript code that fetches the JSON from the server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
+    deactivate server
+
+    Note right of browser: The browser executes the "redrawNotes" callback function that renders <br>the notes, by storing the notes list on front-end side
+
+    Note left of browser: "new-note" submitted which renders the notes list on the page <br>and sends the "new-note" as JSON data to the server
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa , Request PAYLOAD {"content":"new-note","date":"2025-09-22T16:34:28.621Z"}
+    activate server
+    server-->>browser: The server responds with status code 201 created, if the note is valid (max 100 chars)
+    deactivate server
+
+    Note right of server: The server adds the "new-note" content + date to the notes list
