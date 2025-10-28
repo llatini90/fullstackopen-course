@@ -1,3 +1,4 @@
+
 const App = () => {
   const course = 'Half Stack application development'
   const parts = [{
@@ -13,6 +14,8 @@ const App = () => {
     exercises: 14
   }
 ];
+
+
   return (
     <div>
       <Header course={course} />
@@ -24,22 +27,8 @@ const App = () => {
 
 export default App
 
-const Header = (props) => {
-  return <h1>{props.course}</h1>
-}
+const Header = ({course}) => <h1>{course}</h1>
 
-const Content = (props) => {
-  return (
-    <>
-      {props.parts.map((item, index) => <p key={index}>{item.name}</p>)}
-    </>
-  )
-}
+const Content = (props) => <>{props.parts.map((item, index) => <p key={index}>{item.name}</p>)}</>
 
-const Total = ( props ) => {
-  return (
-    <>
-      <p>Number of exercises {props.parts.reduce((a,v) =>  a = a + v.exercises , 0 )}</p>
-    </>
-  )
-}
+const Total = ( props ) => <p>Number of exercises {props.parts.reduce((a,v) =>  a = a + v.exercises , 0 )}</p>
